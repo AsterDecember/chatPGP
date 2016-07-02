@@ -1,0 +1,41 @@
+extends layout
+
+block content
+    login-directive
+        .top-content
+              .inner-bg
+                .container
+                  .row
+                    .col-sm-8.col-sm-offset-2.text
+                      h1
+                        strong BUAP
+                        |  SysHuskies
+                  .row
+                    .col-sm-6.col-sm-offset-3.form-box
+                      .form-top
+                        .form-top-left
+                          h3 Login to our site
+                          p Enter your username and password to log on:
+                      form(ng-submit='login.onSubmit()')
+                        .form-group
+                            label.sr-only(for='form-username') Username
+                            input#form-username.form-username.form-control(type='text', ng-model='login.username', placeholder='Username...')
+                        .form-group
+                            label.sr-only(for='form-password') Password
+                            input#form-password.form-password.form-control(type='text', ng-model='login.password', placeholder='Password...')
+                        .form-group
+                            lable PasswordEncrypted
+                            textarea#comment.form-control(rows='2', ng-model='login.passc', readonly='readonly') #{encryptedPass}
+                        .form-group
+                            lable Private Key
+                            textarea#comment.form-control(rows='7', ng-model='login.privatekey' ,readonly='readonly') #{keyPrivateString}
+                        .form-group
+                            lable Password Decrypted
+                            input.form-control(name='passworddecrypted', ng-model='login.passde',type='text', value='#{decrypted}', readonly='readonly')
+
+                          button.btn(type='submit', name='login', value='login') Log in!
+                        .form-group
+                        if errors
+                            each error ,i  in errors
+                                div.alert.alert-danger #{error.msg}
+

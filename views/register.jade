@@ -1,0 +1,55 @@
+extends layout
+
+block content
+
+    register-directive
+        .page-header
+            h1
+                |Register
+
+        .row
+            .col-md-8.col-md-offset-2
+                form(ng-submit='register.submit()', novalidate='novalidate')
+                    .form-group
+                        label Name
+                        input.form-control(ng-model='register.user.name',
+                                            type='text',
+                                            placeholder='Enter Name',
+                                            required='required',
+                                            required-err-type='nameRequired')
+                    .form-group
+                        label Email
+                        input.form-control(ng-model='register.user.email',
+                                            type='email',
+                                            placeholder='Enter Email',
+                                            required='required')
+                    .form-group
+                        label Username
+                        input.form-control(ng-model='register.user.username',
+                                            type='text',
+                                            placeholder='Enter Username',
+                                            required='required',
+                                            required-err-type='usernameRequired')
+                    .form-group
+                        label Password
+                        input.form-control(ng-model='register.user.password',
+                                            type='text',
+                                            placeholder='Enter Password',
+                                            required='required',
+                                            required-err-type='passwordRequired')
+                    .form-group
+                        label md4
+                        input.form-control(ng-model='register.user.md4', type='text', readonly='readOnly')
+                    .form-group
+                        label PasswordEncrypted
+                        textarea.form-control(ng-model='register.user.passc', rows='2', readonly='readOnly')
+                    .form-group
+                        label Private Key
+                        textarea.form-control(ng-model='register.user.privatekey', rows='7', readonly='readOnly')
+                    .form-group
+                        label Public Key
+                        textarea.form-control(ng-model='register.user.publickey', rows='5', readonly='readOnly')
+
+                    .col-md-6.col-md-offset-3
+                        button.btn.btn-primary.form-control(type='submit')
+                            |Submit
