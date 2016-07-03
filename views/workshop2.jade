@@ -14,37 +14,39 @@ block content
                     small  Add information in order to send
                 .col-md-8.col-md-offset-2
                     form(method='post', action='/users/workshop1Send')
+
                         .form-group
                             lable Text
                             input.form-control(name='text', type='text', placeholder='Enter plain text')
                         .form-group
                             lable MD4
-                            input.form-control(name='md4', type='text', value='#{md4}')
+                            input.form-control(name='md4', type='text')
                         .form-group
                             lable Private Key
-                            textarea#comment.form-control(rows='7') #{keyPrivate}
+                            textarea#comment.form-control(rows='7')
                         .form-group
                             lable Public Key
-                            textarea#comment.form-control(rows='5') #{keyPublic}
-                        input.btn.btn-primary(type='submit', name='submit', value='workshop1')
+                            textarea#comment.form-control(rows='5')
+                        input.btn.btn-primary(type='submit', name='submit', value='Send')
+                        
             .col-md-6
                 .page-header
                 h1
                     | Recived
                     small  Decrypt your message
                 .col-md-8.col-md-offset-2
-                    form(method='post', action='/users/workshop1Rec')
+                    form(method='post', action='/users/workshop2Rec')
                         .form-group
                             lable Text
-                            input.form-control(name='textDec', type='text', value='#{textD}')
+                            input.form-control(name='textDec', type='text', value='#{varexp.text}')
                         .form-group
                             lable MD4
-                            input.form-control(name='md4Dec', type='text', value='#{md4D}')
+                            input.form-control(name='md4Dec', type='text', value='#{varexp.md4}')
                         .form-group
                             lable Private Key
                             textarea#comment.form-control(rows='7') #{keyPrivateString}
                         .form-group
                             lable Public Key
                             textarea#comment.form-control(rows='5') #{keyPublicString}
-                        input.btn.btn-primary(type='submit', name='submit', value='workshop2')
+                        input.btn.btn-primary(type='submit', name='submit', value='Decript')
         

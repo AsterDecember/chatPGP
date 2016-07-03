@@ -4,13 +4,30 @@ let router = express.Router();
 let passport = require('passport');
 let LocalStrategy = require('passport-local').Strategy;
 let AdmZip = require('adm-zip');
+let NodeRSA = require('node-rsa');
+let zlib = require('zlib');
+
 
 
 let User = require('../models/user');
 
 /* GET users listing. */
+let dataWorkshop ={};
+
+
 router.get('/workshop2',function(req,res,next){
-  res.render('workshop2');
+  console.log('getdel workshop2'+dataWorkshop.text);
+  res.render('workshop2',{
+    varexp:dataWorkshop
+  });
+});
+
+router.post('/workshop2Rec',function(req,res,next){
+  //console.log(req.body);
+  //console.log('post del workshop2 node');
+  dataWorkshop= req.body;
+  res.send(dataWorkshop);
+
 });
 
 router.get('/workshop1',function(req,res,next){
@@ -21,23 +38,76 @@ router.post('/workshop1Rec',function(req,res,next){
 });
 
 router.post('/workshop1Send',function(req,res,next){
-  console.log(req.body);
+  //console.log('post del workshop1');
+  //console.log(req.body);
   let encrypted = require('../modules/rsaModule');
   let keyPrivate = encrypted.getPrivate();
   let keyPublic = encrypted.getPublic();
-
+  //console.log('post en node workshop1');
   let md4 = encrypted.getMd4(req.body.text);
+  //console.log('MD4 EN workshop1'+md4);  
 
   let message ={
     text:req.body.text,
     md4: md4,
-    keyPr: keyPrivate,
-    keyPu: keyPublic
+    //keyPr: keyPrivate,
+    //keyPu: keyPublic
   }
-  console.log('Informacion a Zippear'+message);
+  console.log('---------Informacion:')
+  console.log(message.text);
+  console.log(message.md4);
+  console.log('Informacion a mandar'+message);
+
+  //Encrypt module
+
+  //Creating keys
+  let kPub = new NodeRSA(keyPublic);
+  let kPri = new NodeRSA(keyPrivate);
+
+  //encrypting data and decrypt
+  let zipEnc= kPub.encrypt(message);
+  console.log('zip Encriptado : '+zipEnc);
+  let zipDes=kPri.decrypt(zipEnc);
+  console.log('desencriptado------:'+zipDes);
+  console.log('exito en post workshop1');
+  
+
+  /*zlib.deflate(message);
+  console.log('buffer zippeado:'+message);
+  */
+   // Compress it and convert to utf8 string, just for the heck of it
+  /*zlib.deflate(input).toString('utf8');
+
+  // Compress, then uncompress (get back what we started with)
+  zlib.inflate(zlib.deflate(input));
+  console.log('');
+  console.log(input);*/
+
+/* Again, and convert back to our initial string
+  zlib.inflate(zlib.deflate(message)).toString('utf8');
+  console.log('este deberia ser el buffer normal:'+message);
   let zip = new AdmZip();
   message = zip.toBuffer();
-  res.render('workshop',{
+  console.log('Informacion zippeada:'+message);
+
+  
+
+let unziped;
+let zip = new AdmZip(message);
+let messageZiped;
+zip.addFile(messageZiped, message.text);
+zip.addFile(message.md4,messageZiped);
+console.log('prueba del zip'+zip);
+zip.extractAllTo(unziped,true);
+console.log('mas cosas raras:'+unziped);
+console.log('a continuacion se deberia imprimir informacion de angular');*/
+
+console.log(req.body);
+
+
+
+  console.log(message);
+  res.render('register',{
     keyPublic:keyPublic,
     keyPrivate:keyPrivate,
     md4:md4,

@@ -13,20 +13,21 @@ block content
                     | Send
                     small  Add information in order to send
                 .col-md-8.col-md-offset-2
-                    form(method='post', action='/users/workshop1Send')
-                        .form-group
-                            lable Text
-                            input.form-control(name='text', type='text', placeholder='Enter plain text')
-                        .form-group
-                            lable MD4
-                            input.form-control(name='md4', type='text', value='#{md4}')
-                        .form-group
-                            lable Private Key
-                            textarea#comment.form-control(rows='7') #{keyPrivate}
-                        .form-group
-                            lable Public Key
-                            textarea#comment.form-control(rows='5') #{keyPublic}
-                        input.btn.btn-primary(type='submit', name='submit', value='workshop1')
+                    send-directive12
+                        form(ng-submit='send.send()')
+                            .form-group
+                                lable Text
+                                input.form-control(ng-model='send.data.text', type='text', placeholder='Enter plain text')
+                            .form-group
+                                lable MD4
+                                input.form-control(type='text', ng-model='send.data.md4')
+                            .form-group
+                                lable Private Key
+                                textarea#comment.form-control(rows='7') #{keyPrivate}
+                            .form-group
+                                lable Public Key
+                                textarea#comment.form-control(rows='5') #{keyPublic}
+                            input.btn.btn-primary(type='submit', name='submit', value='Send')
             .col-md-6
                 .page-header
                 h1
@@ -36,15 +37,15 @@ block content
                     form(method='post', action='/users/workshop1Rec')
                         .form-group
                             lable Text
-                            input.form-control(name='textDec', type='text', value='#{textD}')
+                            input.form-control(name='textDec', type='text', value='')
                         .form-group
-                            lable MD4
-                            input.form-control(name='md4Dec', type='text', value='#{md4D}')
+                            lable md4
+                            input.form-control(name='md4Dec', type='text', value='')
                         .form-group
                             lable Private Key
                             textarea#comment.form-control(rows='7') #{keyPrivateString}
                         .form-group
                             lable Public Key
                             textarea#comment.form-control(rows='5') #{keyPublicString}
-                        input.btn.btn-primary(type='submit', name='submit', value='workshop2')
+                        input.btn.btn-primary(type='submit', name='submit', value='Decript')
         
